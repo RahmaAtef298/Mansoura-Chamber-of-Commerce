@@ -1,0 +1,68 @@
+<div class="loader" *ngIf="isLoading">
+  <div class="inside">
+    <app-page-loader></app-page-loader>
+  </div>
+</div>
+<div class="container" *ngIf="!isLoading">
+    <div class="form">
+      <h4>Add Governate Form :</h4>
+      <div class="FormContainer">
+        <form (ngSubmit)="onSubmit(addForm)" #addForm="ngForm">
+          <div class="form-group">
+              <label for="GovernateId">Governate Id</label>
+              <div class="input">
+                <input type="text" pattern="[0-9]*" [disabled]="disable" (input)="checkIfExist(gCode)" class="form-control" id="GovernateId" ngModel #gCode="ngModel" [(ngModel)]="GovernateId" name="GovernateId" required>
+                <i *ngIf="!exist && gCode.valid && gCode.touched" class="far fa-check-circle correct"></i>
+                <i *ngIf="exist && gCode.valid && gCode.touched" class="far fa-times-circle wrong"></i>
+              </div>
+              <span class="error" *ngIf="!gCode.valid && gCode.touched">Please enter a valid Governate Code!</span>
+            </div>
+          <div class="form-group">
+            <label for="GovernateName">Governate Name</label>
+            <div class="input">
+              <input type="text" class="form-control" id="GovernateName" (input)="checkIfNameExist(gName)" ngModel #gName="ngModel" [(ngModel)]="GovernateName" name="GovernateName" required>
+              <i *ngIf="!nExist && gName.valid && gName.touched" class="far fa-check-circle correct"></i>
+              <i *ngIf="nExist && gName.valid && gName.touched" class="far fa-times-circle wrong"></i>
+            </div>
+            <span class="error" *ngIf="!gName.valid && gName.touched">Please enter a valid Governate Name!</span>
+          </div>
+          <button type="submit" class="btn btn-info" [disabled]="!addForm.valid">{{ mode }}</button>
+        </form>
+      </div>
+    </div>
+    <table class="table">
+      <caption>Governate List</caption>
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Name</th>
+          <th scope="col">Update</th>
+          <th scope="col">Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let governate of governates">
+          <th scope="row">{{ governate.GovernorateID }}</th>
+          <td>{{ governate.GovernorateName }}</td>
+          <td><button type="button" class="btn btn-info" (click)="onEdit(governate.GovernorateID)">Update</button></td>
+          <td><button type="button" class="btn btn-danger" (click)="openModal(deleteModal, governate.GovernorateID, governate.GovernorateName)">Delete</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <ng-template #deleteModal let-modal class="modal-lg">
+    <div class="modal-header">
+      <h3 class="modal-title" id="modal-basic-title">Delete Governate</h3>
+      <button type="button" class="close" aria-label="Close" (click)="ModalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+            Are you Sure for Deleteing <span style="color: red;">{{ governateName }}</span> ?
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger" (click)="onDelete()">Delete</button>
+      <button type="button" class="btn btn-outline-secondary" (click)="ModalRef.hide()">Close</button>
+    </div>
+</ng-template>

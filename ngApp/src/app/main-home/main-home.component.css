@@ -1,0 +1,21 @@
+.contain {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.contain .navbar-btn {
+  -ms-flex-preferred-size: 85%;
+      flex-basis: 85%;
+}
+
+.contain .navbar-logout {
+  text-decoration: none !important;
+  cursor: pointer;
+  -ms-flex-preferred-size: 15%;
+      flex-basis: 15%;
+  text-align: center;
+  font-size: 20px;
+  margin-top: 25px;
+}
+/*# sourceMappingURL=main-home.component.css.map */

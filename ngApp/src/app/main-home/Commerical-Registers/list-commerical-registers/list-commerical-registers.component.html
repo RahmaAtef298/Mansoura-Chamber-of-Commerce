@@ -1,0 +1,68 @@
+<div class="loader" *ngIf="isLoading">
+  <div class="inside">
+    <app-page-loader></app-page-loader>
+  </div>
+</div>
+<div class="container" *ngIf="!isLoading">
+    <div class="form">
+      <h4>Add Commerical Form :</h4>
+      <div class="FormContainer">
+        <form (ngSubmit)="onSubmit(addForm)" #addForm="ngForm">
+          <div class="form-group">
+              <label for="commericalRegisterId">Commerical Register ID</label>
+              <div class="input">
+                <input type="text" pattern="[0-9]*" [disabled]="disable" (input)="checkIfExist(CRCode)" class="form-control" id="commericalRegisterId" ngModel #CRCode="ngModel" [(ngModel)]="commericalRegisterId" name="commericalRegisterId" required>
+                <i *ngIf="!exist && CRCode.valid && CRCode.touched" class="far fa-check-circle correct"></i>
+                <i *ngIf="exist && CRCode.valid && CRCode.touched" class="far fa-times-circle wrong"></i>
+              </div>
+              <span class="error" *ngIf="!CRCode.valid && CRCode.touched">Please enter a valid Commerical Register Code!</span>
+          </div>
+          <div class="form-group">
+              <label for="commericalRegisterName">Commerical Register Name</label>
+              <div class="input">
+                <input type="text" class="form-control" id="commericalRegisterName" (input)="checkIfNameExist(CRName)" ngModel #CRName="ngModel" [(ngModel)]="commericalRegisterName" name="commericalRegisterName" required>
+                <i *ngIf="!nExist && CRName.valid && CRName.touched" class="far fa-check-circle correct"></i>
+                <i *ngIf="nExist && CRName.valid && CRName.touched" class="far fa-times-circle wrong"></i>
+              </div>
+              <span class="error" *ngIf="!CRName.valid && CRName.touched">Please enter a valid Commerical Register Name!</span>
+          </div>
+          <button type="submit" class="btn btn-info" [disabled]="!addForm.valid">{{ mode }}</button>
+        </form>
+      </div>
+    </div>
+    <table class="table">
+      <caption>Commercial Registers List</caption>
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Name</th>
+          <th scope="col">Update</th>
+          <th scope="col">Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let commericalRegister of commericalRegisters">
+          <th scope="row">{{ commericalRegister.CommercialRegisterId }}</th>
+          <td>{{ commericalRegister.RegisterCommercialName }}</td>
+          <td><button type="button" class="btn btn-info" (click)="onEdit(commericalRegister.CommercialRegisterId)">Update</button></td>
+          <td><button type="button" class="btn btn-danger" (click)="openModal(deleteModal, commericalRegister.CommercialRegisterId, commericalRegister.RegisterCommercialName)">Delete</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <ng-template #deleteModal let-modal class="modal-lg">
+    <div class="modal-header">
+      <h3 class="modal-title" id="modal-basic-title">Delete Commerical Register</h3>
+      <button type="button" class="close" aria-label="Close" (click)="ModalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+            Are you Sure for Deleteing <span style="color: red;">{{ CRName }}</span> ?
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger" (click)="onDelete()">Delete</button>
+      <button type="button" class="btn btn-outline-secondary" (click)="ModalRef.hide()">Close</button>
+    </div>
+</ng-template>

@@ -1,0 +1,98 @@
+
+
+.container{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    width: 100%;
+    .form{
+        flex-basis: 30%;
+    }
+    table{
+        width: 650px;
+        margin: auto;
+        flex-basis: 70%;
+    }
+}
+
+.loader{
+    margin-top: 200px;
+    .inside{
+        width: 50px;
+        margin: auto;
+    }
+}
+
+.wrapper{
+    text-align: center;
+    margin-left: 330px;
+    margin-top: 20px;
+    .search{
+        width: 320px;
+        margin-left: 15px;
+        padding-left: 5px;
+        border-radius: 10px;
+        display: flex;
+    }
+}
+
+.FormContainer{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 1px solid rgb(111, 204, 228);
+    width: 90%;
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+input{
+    width: 100%;
+}
+
+input.ng-invalid.ng-touched {
+    border: 1px solid red;
+}
+
+.error{
+    color : red;
+}
+
+.input{
+    display: flex;
+    input{
+        flex-basis: 100%;
+    }
+    i{
+        flex-basis: 5%;
+    }
+}
+
+.correct{
+    color: rgb(0, 255, 0);
+    padding-top: 10px;
+    margin-left: 5px;
+}
+
+.wrong{
+    color:red;
+    padding-top: 10px;
+    margin-left: 5px;
+}
+
+form{
+    margin: 20px;
+    width: 100%;
+}
+
+.imgcontainer{
+    width: 30%;
+}
+
+img{
+    margin-top: 20px;
+    width: 200px;
+    height: 200px;
+}
+
+
+

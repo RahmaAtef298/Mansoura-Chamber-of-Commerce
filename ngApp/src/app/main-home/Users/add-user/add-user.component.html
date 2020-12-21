@@ -1,0 +1,77 @@
+<div class="loader" *ngIf="isLoading">
+    <div class="inside">
+      <app-page-loader></app-page-loader>
+    </div>
+</div>
+<div class="container" *ngIf="!isLoading">
+          <div class="form">
+            <h4>{{mode}} User Form :</h4>
+            <div class="FormContainer">
+              <!-- (ngSubmit)="onSubmit(addForm,Cashier,Inactive)"   -->
+              <form #addForm="ngForm">
+                <div class="form-group">
+                    <label for="Username">Username</label>
+                    <div class="input">
+                      <input type="text" (input)="checkIfNameExist(username)" ngModel #username="ngModel" class="form-control" id="Username" [(ngModel)]="Username" name="Username" required>
+                      <i *ngIf="!nExist && username.valid && username.touched" class="far fa-check-circle correct"></i>
+                      <i *ngIf="nExist && username.valid && username.touched" class="far fa-times-circle wrong"></i>
+                    </div>
+                    <span class="error" *ngIf="!username.valid && username.touched">Please enter a valid Username!</span>
+                </div>
+                <div class="form-group">
+                  <label for="Password">Password</label>
+                  <div class="input">
+                    <input type="text" class="form-control" id="Password"  (input)="checkIfExist(password)" ngModel #password="ngModel" [(ngModel)]="Password" name="Password" required>
+                    <i *ngIf="!exist && password.valid && password.touched" class="far fa-check-circle correct"></i>
+                    <i *ngIf="exist && password.valid && password.touched" class="far fa-times-circle wrong"></i>
+                  </div>
+                  <span class="error" *ngIf="!password.valid && password.touched">Please enter a valid Password!</span>
+                </div>
+                <div class="form-group">
+                    <input class="form-check-input" type="checkbox" id="checkCashier" [checked]="Cashier" data-md-icheck name="Cashier" #cashier>&nbsp;
+                    <label class="form-check-label" for="checkCashier">  Cashier</label>
+                </div>
+                <div class="form-group">
+                    <input class="form-check-input" type="checkbox" id="checkInactive" [checked]="Inactive" name="Inactive" #inactive>&nbsp;
+                    <label class="form-check-label" for="checkInactive">  Inactive</label>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-info" (click)="openRolesModal(RolesModal,addForm,cashier,inactive)" [disabled]="!addForm.valid">{{ mode }}</button>
+              </form>
+            </div>
+          </div>
+</div> 
+<ng-template  #RolesModal let-modal class="modal-lg">
+    <div class="modal-header">
+      <h3 class="modal-title" id="modal-basic-title">User Roles</h3>
+      <button type="button" class="close" aria-label="Close" (click)="ModalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <ngb-tabset [destroyOnHide]="false" #title="ngbTabset" (click)="checkIfAllSelected(title.activeId)">
+      <ngb-tab *ngFor="let groupName of RulesGroup" [title]="groupName" [id]="groupName">
+          <ng-template ngbTabContent>
+            <div class="scrolling_data">
+              <div class="checkbox custom-control custom-checkbox">
+                <input class="custom-control-input" type="checkbox" id="selectAll" [checked]="mainSelect" (change)="checkAll(groupName,$event)">
+                <span class="checkmark" (click)="checkAll(groupName,$event)"></span>
+                <label class="form-check-label" for="selectAll">{{ selectMode }}</label>
+              </div>
+              <div class="form-group" *ngFor="let role of Roles">
+                <div *ngIf="role.GroupRole==groupName" class="checkbox custom-control custom-checkbox">
+                  <input class="custom-control-input" type="checkbox" [id]="role.ObjectName" [checked]="role.isChecked" [name]="role.ObjectName">
+                  <span class="checkmark"  (click)="role.isChecked=!role.isChecked" (click)="checkItem(role.ObjectId,role.GroupRole,role.isChecked)"></span>
+                  <label class="form-check-label" for="role.ObjectName">{{ role.ObjectName_AR }}</label>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </ngb-tab>
+      </ngb-tabset>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-info" (click)="sendRoles()">Submit</button>
+      <button type="button" class="btn btn-outline-secondary" (click)="ModalRef.hide()">Close</button>
+    </div>
+</ng-template>

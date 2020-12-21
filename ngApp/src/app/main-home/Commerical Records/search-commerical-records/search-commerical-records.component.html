@@ -1,0 +1,172 @@
+<div class="loader" *ngIf="isLoading">
+    <div class="inside">
+      <app-page-loader></app-page-loader>
+    </div>
+</div>
+<div class="container" *ngIf="!isLoading">
+        <div class="form">
+         <h4 class="FormTitle">Search Commerical Recod Form :</h4>
+         <div class="FormContainer">
+            <form (ngSubmit)="onSubmit(searchForm)" #searchForm="ngForm">
+                <div class="form-row">
+                    <div class="form-group col-sm-6">
+                        <label for="recordNumber">Record Number :</label>
+                        <div class="input">
+                          <input type="number" min="1" class="form-control" id="recordNumber" name="recordNumber" ngModel #recordNum="ngModel" [(ngModel)]="recordNumber" placeholder="Recore Namber" required><i>*</i>
+                        </div>
+                        <span class="error" *ngIf="!recordNum.valid && recordNum.touched">This Field is Required</span>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label for="ownerName">Owner Name :</label>
+                        <div class="input">
+                          <input type="text" class="form-control" id="ownerName" name="ownerName" ngModel #ownerN="ngModel" [(ngModel)]="ownerName" placeholder="Owner Name">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-sm-12"></div>
+                <div class="form-row">
+                    <div class="form-group col-sm-6">
+                        <label for="city">City :</label>
+                        <div class="input">
+                          <input type="text" class="form-control" id="cityName" name="cityName" ngModel #cName="ngModel" (change)="getCity(cName)" [(ngModel)]="cityName" [ngbTypeahead]="searchCities" [resultFormatter]="formatter" [ngModelOptions]="{standalone: true}" placeholder="Choose City">
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label for="region">Region :</label>
+                        <div class="input">
+                          <input type="text" class="form-control" id="regionName" name="regionName" ngModel #rName="ngModel" (change)="getRegion(rName)" [(ngModel)]="regionName" [ngbTypeahead]="searchRegions" [resultFormatter]="formatter" [ngModelOptions]="{standalone: true}"  placeholder="Choose Region">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-sm-4">
+                        <label for="organization">Organization :</label>
+                        <div class="input">
+                          <input type="text" class="form-control" id="organizationName" name="organizationName" ngModel #oName="ngModel" (change)="getOrganization(oName)" [(ngModel)]="organizationName" [ngbTypeahead]="searchOrganizations" [resultFormatter]="formatter" [ngModelOptions]="{standalone: true}" placeholder="Choose Organization">
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <label for="category">Category : </label>
+                        <div class="input">
+                          <input type="text" class="form-control" id="categoryName" name="categoryName" ngModel #catName="ngModel" (change)="getCategory(catName)" [(ngModel)]="categoryName" [ngbTypeahead]="searchCategories" [resultFormatter]="formatter" [ngModelOptions]="{standalone: true}" placeholder="Choose Category">
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <label for="subcategory">Subcategory :</label>
+                        <div class="input">
+                          <input type="text" class="form-control" id="subCategoryName" name="subCategoryName" ngModel #subName="ngModel" (change)="getSubCategory(subName)" [(ngModel)]="subCategoryName" [ngbTypeahead]="searchSubCategories" [resultFormatter]="formatter" [ngModelOptions]="{standalone: true}" placeholder="Choose SubCategory">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-sm-6">
+                        <label for="dateFrom">Date From :</label>
+                        <div class="input">
+                          <input type="date" class="form-control" id="dateFrom" name="dateFrom" ngModel #dFName="ngModel" [(ngModel)]="dateFrom" required><i>*</i>
+                        </div>
+                        <span class="error" *ngIf="!dFName.valid && dFName.touched">This Field is Required</span>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label for="dateTo">To :</label>
+                        <div class="input">
+                          <input type="date" class="form-control" id="dateTo" name="dateTo" ngModel #dTName="ngModel" [(ngModel)]="dateTo" required><i>*</i>
+                        </div>
+                        <span class="error" *ngIf="!dTName.valid && dTName.touched">This Field is Required</span>
+                    </div>
+                </div>
+                <div class="form-group col-sm-12"></div>
+                <div class="form-row">
+                    <div class="form-group col-sm-3">
+                        <div class="checkbox">
+                            <input class="form-check-input" type="checkbox" id="IsBankrupted" name="IsBankrupted" [(ngModel)]="bankruptedCheck">
+                            <label class="form-check-label" for="IsBankrupted">Is Bankrupted</label>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-2">
+                        <div class="checkbox">
+                            <input class="form-check-input" type="checkbox" id="IsVoided" name="IsVoided" [(ngModel)]="voidedCheck">
+                            <label class="form-check-label" for="IsVoided">Is Voided</label>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-2">
+                        <div class="checkbox">
+                            <input class="form-check-input" type="checkbox" id="hasCard" name="hasCard" [(ngModel)]="cardCheck">
+                            <label class="form-check-label" for="hasCard">Has Card</label>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <div class="checkbox">
+                            <input class="form-check-input" type="checkbox" id="IsDoublicated" name="IsDoublicated" [(ngModel)]="doublicatedCheck">
+                            <label class="form-check-label" for="IsDoublicated">Is Doublicated</label>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-2">
+                        <div class="checkbox">
+                            <input class="form-check-input" type="checkbox" id="IsBandar" name="IsBandar" [(ngModel)]="bandarCheck">
+                            <label class="form-check-label" for="IsBandar">Is Bandar</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-sm-6">
+                        <label for="paidYearOne">Paid Year 1 :</label>
+                        <div class="input">
+                          <input type="number" min="2010" class="form-control" id="paidYearOne" name="paidYearOne" placeholder="2010" ngModel #pOName="ngModel" [(ngModel)]="paidYearOne">
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label for="paidYearTwo">Paid Year 2 :</label>
+                        <div class="input">
+                          <input type="number" min="2010" class="form-control" id="paidYearTwo" name="paidYearTwo" placeholder="2010" ngModel #pTName="ngModel" [(ngModel)]="paidYearTwo">
+                        </div>
+                    </div>
+                </div>
+                <div class="button">
+                    <br>
+                    <button type="submit" class="btn btn-info" [disabled]="!searchForm.valid">Search</button>
+                </div>
+            </form>
+         </div>
+        </div>
+</div>
+<div class="tableContainer" *ngIf="loadRecordsList">
+    <table class="table">
+        <caption>Commerical Records List</caption>
+        <thead>
+          <tr>
+            <th scope="col">RecordSerial</th>
+            <th scope="col">RecordNumber</th>
+            <th scope="col">OwnerName</th>
+            <th scope="col">OrganizationType</th>
+            <th scope="col">LastUser</th>
+            <th scope="col">Categories</th>
+            <th scope="col">CityName</th>
+            <th scope="col">RegionName</th>
+            <th scope="col">StartDate</th>
+            <th scope="col">Capital1</th>
+            <th scope="col">Capital2</th>
+            <th scope="col">Phone</th>
+            <th scope="col">PhoneManager</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let commericalRecord of commericalRecords">
+            <td>{{ commericalRecord.RecordSerial }}</td>
+            <td>{{ commericalRecord.RecordNumber }}</td>
+            <td>{{ commericalRecord.OwnerName }}</td>
+            <td>{{ commericalRecord.OrganizationType }}</td>
+            <td>{{ commericalRecord.LastUser }}</td>
+            <td>{{ commericalRecord.Categories }}</td>
+            <td>{{ commericalRecord.CityName }}</td>
+            <td>{{ commericalRecord.RegionName }}</td>
+            <td>{{ commericalRecord.StartDate }}</td>
+            <td>{{ commericalRecord.Capital1 }}</td>
+            <td>{{ commericalRecord.Capital2 }}</td>
+            <td>{{ commericalRecord.Phone }}</td>
+            <td>{{ commericalRecord.PhoneManager }}</td>
+          </tr>
+        </tbody>
+    </table>
+</div>
+
+      

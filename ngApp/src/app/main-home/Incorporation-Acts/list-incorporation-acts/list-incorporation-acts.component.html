@@ -1,0 +1,68 @@
+<div class="loader" *ngIf="isLoading">
+  <div class="inside">
+    <app-page-loader></app-page-loader>
+  </div>
+</div>
+<div class="container" *ngIf="!isLoading">
+    <div class="form">
+      <h4>Add Interpolation Act form :</h4>
+      <div class="FormContainer">
+        <form (ngSubmit)="onSubmit(addForm)" #addForm="ngForm">
+          <div class="form-group">
+           <label for="IncorporationActId">IncorporationAct Id</label>
+            <div class="input">
+             <input type="text" pattern="[0-9]*" [disabled]="disable" (input)="checkIfExist(IAID)" class="form-control" id="IncorporationActId" ngModel #IAID="ngModel" [(ngModel)]="IncorporationActId" name="IncorporationActId" required>
+             <i *ngIf="!exist && IAID.valid && IAID.touched" class="far fa-check-circle correct"></i>
+             <i *ngIf="exist && IAID.valid && IAID.touched" class="far fa-times-circle wrong"></i>
+           </div>
+           <span class="error" *ngIf="!IAID.valid && IAID.touched">Please enter a valid Incorporation Act ID!</span>
+          </div>
+          <div class="form-group">
+            <label for="IncorporationActName">IncorporationAct Name</label>
+            <div class="input">
+             <input type="text" class="form-control" id="IncorporationActName" (input)="checkIfNameExist(IAName)" ngModel #IAName="ngModel" [(ngModel)]="IncorporationActName" name="IncorporationActName" required>
+             <i *ngIf="!nExist && IAName.valid && IAName.touched" class="far fa-check-circle correct"></i>
+             <i *ngIf="nExist && IAName.valid && IAName.touched" class="far fa-times-circle wrong"></i>
+            </div>
+            <span class="error" *ngIf="!IAName.valid && IAName.touched">Please enter a valid Incorporation Act Name!</span>
+          </div>
+          <button type="submit" class="btn btn-info" [disabled]="!addForm.valid">{{ mode }}</button>
+        </form>
+      </div>
+    </div>
+    <table class="table">
+      <caption>InterporationAct List</caption>
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Name</th>
+          <th scope="col">Update</th>
+          <th scope="col">Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let incorporationAct of incorporationActs">
+          <th scope="row">{{ incorporationAct.IncorporationActId }}</th>
+          <td>{{ incorporationAct.IncorporationActName }}</td>
+          <td><button type="button" class="btn btn-info" (click)="onEdit(incorporationAct.IncorporationActId)">Update</button></td>
+          <td><button type="button" class="btn btn-danger" (click)="openModal(deleteModal, incorporationAct.IncorporationActId, incorporationAct.IncorporationActName)">Delete</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <ng-template #deleteModal let-modal class="modal-lg">
+    <div class="modal-header">
+      <h3 class="modal-title" id="modal-basic-title">Delete IncorporationAct</h3>
+      <button type="button" class="close" aria-label="Close" (click)="ModalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+            Are you Sure for Deleteing <span style="color: red;">{{ IActName }}</span> ?
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger" (click)="onDelete()">Delete</button>
+      <button type="button" class="btn btn-outline-secondary" (click)="ModalRef.hide()">Close</button>
+    </div>
+</ng-template>

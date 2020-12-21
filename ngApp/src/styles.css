@@ -1,0 +1,15 @@
+/* You can add global styles to this file, and also import other style files */
+ngb-typeahead-window {
+  width: 240px;
+}
+
+ngb-typeahead-window button {
+  display: block;
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 5px;
+  border-bottom: 1px solid #ccc;
+  text-align: right;
+}
+/*# sourceMappingURL=styles.css.map */

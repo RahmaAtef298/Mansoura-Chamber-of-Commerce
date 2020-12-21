@@ -1,0 +1,68 @@
+<div class="loader" *ngIf="isLoading">
+  <div class="inside">
+    <app-page-loader></app-page-loader>
+  </div>
+</div>
+<div class="container" *ngIf="!isLoading">
+    <div class="form">
+      <h4>Add SubCategory Form :</h4>
+      <div class="FormContainer">
+        <form (ngSubmit)="onSubmit(addForm)" #addForm="ngForm">
+          <div class="form-group cName">
+            <label for="categoryName">Category Name</label>
+            <input id="typeahead-format" type="text" class="form-control" (change)="getCatName(cName)" ngModel #cName="ngModel" [(ngModel)]="categoryName" [ngbTypeahead]="search" [resultFormatter]="formatter" [ngModelOptions]="{standalone: true}" name="categoryName" id="categoryName" required/>
+            <span class="error" *ngIf="!cName.valid && cName.touched">Please enter a valid Category Name!</span>
+          </div>
+          <div class="form-group">
+              <label for="categoryName">SubCategory Name</label>
+              <div class="input">
+                <input type="text" class="form-control" id="subcategoryName" (input)="checkIfNameExist(ScName)" ngModel #ScName="ngModel" [(ngModel)]="subcategoryName" name="subcategoryName" required>
+                <i *ngIf="!nExist && ScName.valid && ScName.touched" class="far fa-check-circle correct"></i>
+                <i *ngIf="nExist && ScName.valid && ScName.touched" class="far fa-times-circle wrong"></i>
+              </div>
+              <span class="error" *ngIf="!ScName.valid && ScName.touched">Please enter a valid SubCategory Name!</span>
+          </div>
+          <button type="submit" class="btn btn-info" [disabled]="!addForm.valid">{{ mode }}</button>
+        </form>
+      </div>
+    </div>
+    <table class="table">
+      <caption>SubCategories List</caption>
+      <thead>
+        <tr>
+          <th scope="col">Category Code</th>
+          <th scope="col">Category Name</th>
+          <th scope="col">Code</th>
+          <th scope="col">Name</th>
+          <th scope="col">Update</th>
+          <th scope="col">Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let subcategory of subcategories">
+              <th scope="row">{{ subcategory.CategoryCode }}</th>
+              <td>{{ subcategory.categoryName }}</td>
+          <th scope="row">{{ subcategory.SubCategoryCode }}</th>
+          <td>{{ subcategory.SubCategoryName }}</td>
+          <td><button type="button" class="btn btn-info" (click)="onEdit(subcategory.SubCategoryCode)">Update</button></td>
+          <td><button type="button" class="btn btn-danger" (click)="openModal(deleteModal, subcategory.SubCategoryCode, subcategory.SubCategoryName)">Delete</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <ng-template #deleteModal let-modal class="modal-lg">
+    <div class="modal-header">
+      <h3 class="modal-title" id="modal-basic-title">Delete SubCategory</h3>
+      <button type="button" class="close" aria-label="Close" (click)="ModalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+            Are you Sure for Deleteing <span style="color: red;">{{ subCategoryName }}</span> ?
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger" (click)="onDelete()">Delete</button>
+      <button type="button" class="btn btn-outline-secondary" (click)="ModalRef.hide()">Close</button>
+    </div>
+</ng-template>

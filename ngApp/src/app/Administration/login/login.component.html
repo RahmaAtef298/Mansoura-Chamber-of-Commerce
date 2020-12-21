@@ -1,0 +1,55 @@
+
+<div class="loader" *ngIf="isLoading">
+  <div class="inside">
+    <app-page-loader></app-page-loader>
+  </div>
+</div>
+<div class="wrapper">
+  <div class="contain" [class.voted]="flipped">
+    <div class="login" *ngIf="!isLoading">
+      <h2> Login Form
+        <a (click)="flipIt()">
+          <i class="lnr lnr-arrow-right-circle"></i>
+        </a>
+      </h2>
+      <div class="form-group">
+         <form  (ngSubmit)="Login()" #adminLoginForm>
+           <label for="username">Username</label>
+           <input type="text" pattern="[a-zA-Z]*" class="form-control" name="username" ngModel #name="ngModel" [(ngModel)]="username" id="username" placeholder="Enter Username" required>
+           <span class="error" *ngIf="!name.valid && name.touched">Please enter a valid Username!</span>
+           <br>
+           <label for="password">Password</label>
+           <input type="password" pattern="[0-9]*" class="form-control" name="password" ngModel #pass="ngModel" [(ngModel)]="password" id="password" placeholder="Enter Password" required>
+           <span class="error" *ngIf="!pass.valid && pass.touched">Please enter a valid Password!</span>
+           <br>
+           <button type="submit" class="btn btn-secondary">Login</button>
+         </form>
+      </div>
+    </div>
+    <div class="signup" *ngIf="!isLoading">
+      <h2>
+        <a (click)="flipIt()">
+          <i class="lnr lnr-arrow-left-circle"></i>
+        </a>
+        Signup Form
+      </h2>
+      <div class="form-group">
+        <form  (ngSubmit)="Signup()" #signupForm>
+          <label for="username">Username</label>
+          <input type="text" pattern="[a-zA-Z]*" class="form-control" name="username" ngModel #name="ngModel" [(ngModel)]="username" id="username" placeholder="Enter Username" required>
+          <span class="error" *ngIf="!name.valid && name.touched">Please enter a valid Username!</span>
+          <br>
+          <label for="password">Password</label>
+          <input type="password" pattern="[0-9]*" class="form-control" name="password" ngModel #pass="ngModel" [(ngModel)]="password" id="password" placeholder="Enter Password" required>
+          <span class="error" *ngIf="!pass.valid && pass.touched">Please enter a valid Password!</span>
+          <br>
+          <label for="password">Confirm Password</label>
+          <input type="password" pattern="[0-9]*" class="form-control" name="cpassword" (input)="confirmPassword(cpass)" ngModel #cpass="ngModel" id="cpassword" placeholder="Confirm Password" required>
+          <span class="error" *ngIf="!cpass.valid || errorExit">{{ passError }}</span>
+          <br>
+          <button type="submit" class="btn btn-secondary">Signup</button>
+        </form>
+     </div>
+    </div>
+  </div>
+</div>

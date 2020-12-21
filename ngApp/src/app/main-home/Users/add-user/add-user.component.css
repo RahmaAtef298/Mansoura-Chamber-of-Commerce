@@ -1,0 +1,80 @@
+.container {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 50%;
+}
+
+.container form {
+  width: 90%;
+  margin: 20px;
+}
+
+.loader {
+  margin-top: 200px;
+}
+
+.loader .inside {
+  width: 50px;
+  margin: auto;
+}
+
+.rolesGroup {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+}
+
+.FormContainer {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 1px solid #6fcce4;
+}
+
+.error {
+  color: red;
+}
+
+.correct {
+  color: lime;
+}
+
+.input {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.input input {
+  -ms-flex-preferred-size: 100%;
+      flex-basis: 100%;
+}
+
+.input i {
+  -ms-flex-preferred-size: 5%;
+      flex-basis: 5%;
+}
+
+.correct {
+  color: lime;
+  padding-top: 10px;
+  margin-left: 5px;
+}
+
+.wrong {
+  color: red;
+  padding-top: 10px;
+  margin-left: 5px;
+}
+
+input.ng-invalid.ng-touched {
+  border: 1px solid red;
+}
+
+.scrolling_data {
+  overflow-y: scroll !important;
+  max-height: 300px;
+}
+/*# sourceMappingURL=add-user.component.css.map */

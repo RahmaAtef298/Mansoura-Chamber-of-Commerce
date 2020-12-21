@@ -1,0 +1,80 @@
+<div class="loader" *ngIf="isLoading">
+  <div class="inside">
+    <app-page-loader></app-page-loader>
+  </div>
+</div>
+<div class="wrapper" *ngIf="!isLoading">
+    <input type="number" min="1" class="form-control search" (input)="searchCityCode(code.value)" placeholder="Search with City Code" #code>
+    <input type="number" min="1" class="form-control search" (input)="searchCommericalRegister(cRegister.value)" placeholder="Search with Commerical Register" #cRegister>    
+</div>
+<div class="container" *ngIf="!isLoading">
+        <div class="form">
+          <h4>Add City Form :</h4>
+          <div class="FormContainer">
+            <form (ngSubmit)="onSubmit(addForm)" #addForm="ngForm">
+              <div class="form-group">
+                  <label for="cityCode">City Code</label>
+                  <div class="input">
+                    <input type="text" pattern="[0-9]*" [disabled]="disable" (input)="checkIfExist(cCode)" ngModel #cCode="ngModel" class="form-control" id="citycode" [(ngModel)]="citycode" name="citycode" required>
+                    <i *ngIf="!exist && cCode.valid && cCode.touched" class="far fa-check-circle correct"></i>
+                    <i *ngIf="exist && cCode.valid && cCode.touched" class="far fa-times-circle wrong"></i>
+                  </div>
+                  <span class="error" *ngIf="!cCode.valid && cCode.touched">Please enter a valid City Code!</span>
+              </div>
+              <div class="form-group">
+                <label for="cityName">City Name</label>
+                <div class="input">
+                  <input type="text" class="form-control" id="cityname" (input)="checkIfNameExist(cName)" ngModel #cName="ngModel" [(ngModel)]="cityname" name="cityname" required>
+                  <i *ngIf="!nExist && cName.valid && cName.touched" class="far fa-check-circle correct"></i>
+                  <i *ngIf="nExist && cName.valid && cName.touched" class="far fa-times-circle wrong"></i>
+                </div>
+                <span class="error" *ngIf="!cName.valid && cName.touched">Please enter a valid City Name!</span>
+              </div>
+              <div class="form-group cName">
+                <label class="input-group-text" for="CommercialRegister">Commercial Register ID</label>
+                <input id="typeahead-format" type="text" class="form-control" ngModel #CRID="ngModel" [(ngModel)]="CommercialRegister" name="CommercialRegister" id="CommercialRegister" [ngbTypeahead]="search" [resultFormatter]="formatter" [ngModelOptions]="{standalone: true}" required/>
+                <span class="error" *ngIf="!CRID.valid && CRID.touched">Please Choose a Commercial Register ID!</span>
+              </div>
+              <br>
+              <button type="submit" class="btn btn-info" [disabled]="!addForm.valid">{{ mode }}</button>
+            </form>
+          </div>
+        </div>
+        <table class="table">
+          <caption>Cities List</caption>
+          <thead>
+            <tr>
+              <th scope="col">Code</th>
+              <th scope="col">Name</th>
+              <th scope="col">Commercial Register</th>
+              <th scope="col">Update</th>
+              <th scope="col">Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let city of cities">
+              <th scope="row">{{ city.CityCode }}</th>
+              <td>{{ city.CityName }}</td>
+              <td>{{ city.CommercialRegister }}</td>
+              <td><button type="button" class="btn btn-info" (click)="onEdit(city.CityCode)">Update</button></td>
+              <td><button type="button" class="btn btn-danger" (click)="openModal(deleteModal, city.CityCode, city.CityName)">Delete</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <ng-template #deleteModal let-modal class="modal-lg">
+        <div class="modal-header">
+          <h3 class="modal-title" id="modal-basic-title">Delete City</h3>
+          <button type="button" class="close" aria-label="Close" (click)="ModalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+                Are you Sure for Deleteing <span style="color: red;">{{ cityName }}</span> City ?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" (click)="onDelete()">Delete</button>
+          <button type="button" class="btn btn-outline-secondary" (click)="ModalRef.hide()">Close</button>
+        </div>
+    </ng-template>

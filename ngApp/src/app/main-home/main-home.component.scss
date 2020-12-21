@@ -1,0 +1,14 @@
+.contain{
+    display: flex;
+    .navbar-btn{
+        flex-basis: 85%;
+    }
+    .navbar-logout{
+        text-decoration: none!important;
+        cursor: pointer;
+        flex-basis: 15%;
+        text-align: center;
+        font-size: 20px;
+        margin-top: 25px;
+      }
+}

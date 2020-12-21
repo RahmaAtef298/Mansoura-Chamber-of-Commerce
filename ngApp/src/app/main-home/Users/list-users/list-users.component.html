@@ -1,0 +1,76 @@
+<div class="loader" *ngIf="isLoading">
+    <div class="inside">
+      <app-page-loader></app-page-loader>
+    </div>
+  </div>
+  <div class="wrapper" *ngIf="!isLoading">
+      <input type="number" min="1" class="form-control search" (input)="searchUserId(id.value)" placeholder="Search with User Code" #id> 
+  </div>
+  <div class="container" *ngIf="!isLoading">
+          <!-- <div class="form">
+            <h4>Add User Form :</h4>
+            <div class="FormContainer">
+              <form (ngSubmit)="onSubmit(addForm)" #addForm="ngForm">
+                <div class="form-group">
+                    <label for="Username">Username</label>
+                    <div class="input">
+                      <input type="text" (input)="checkIfNameExist(username)" ngModel #username="ngModel" class="form-control" id="Username" [(ngModel)]="Username" name="Username" required>
+                      <i *ngIf="!nExist && username.valid && username.touched" class="far fa-check-circle correct"></i>
+                      <i *ngIf="nExist && username.valid && username.touched" class="far fa-times-circle wrong"></i>
+                    </div>
+                    <span class="error" *ngIf="!username.valid && username.touched">Please enter a valid Username!</span>
+                </div>
+                <div class="form-group">
+                  <label for="Password">Password</label>
+                  <div class="input">
+                    <input type="text" class="form-control" id="Password"  (input)="checkIfExist(password)" ngModel #password="ngModel" [(ngModel)]="Password" name="Password" required>
+                    <i *ngIf="!exist && password.valid && password.touched" class="far fa-check-circle correct"></i>
+                    <i *ngIf="exist && password.valid && password.touched" class="far fa-times-circle wrong"></i>
+                  </div>
+                  <span class="error" *ngIf="!password.valid && password.touched">Please enter a valid Password!</span>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-info" [disabled]="!addForm.valid">{{ mode }}</button>
+              </form>
+            </div>
+          </div> -->
+          <table class="table">
+            <caption>User List</caption>
+            <thead>
+              <tr>
+                <th scope="col">Username</th>
+                <th scope="col">Password</th>
+                <th scope="col">Cashier</th>
+                <th scope="col">Inactive</th>
+                <th scope="col">Update</th>
+                <th scope="col">Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of users">
+                <th>{{ user.UserName }}</th>
+                <td>{{ user.Password }}</td>
+                <th>{{ user.Cashier }}</th>
+                <td>{{ user.Inactive }}</td>
+                <td><button type="button" class="btn btn-info" [routerLink]="['/EditUser', user.UserID]">Update</button></td>
+                <td><button type="button" class="btn btn-danger" (click)="openModal(deleteModal, user.UserID, user.UserName)">Delete</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+  
+        <ng-template #deleteModal let-modal class="modal-lg">
+          <div class="modal-header">
+            <h3 class="modal-title" id="modal-basic-title">Delete User</h3>
+            <button type="button" class="close" aria-label="Close" (click)="ModalRef.hide()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+                  Are you Sure for Deleteing <span style="color: red;">{{ username }}</span> ?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" (click)="onDelete()">Delete</button>
+            <button type="button" class="btn btn-outline-secondary" (click)="ModalRef.hide()">Close</button>
+          </div>
+      </ng-template>

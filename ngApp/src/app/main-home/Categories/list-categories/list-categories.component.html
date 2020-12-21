@@ -1,0 +1,69 @@
+
+<div class="loader" *ngIf="isLoading">
+  <div class="inside">
+    <app-page-loader></app-page-loader>
+  </div>
+</div>
+<div class="container" *ngIf="!isLoading">
+    <div class="form">
+      <h4 class="FormTitle">Add Category Form :</h4>
+      <div class="FormContainer">
+        <form (ngSubmit)="onSubmit(addForm)" #addForm="ngForm">
+          <div class="form-group">
+              <label for="categorycode">Category Code</label>
+              <div class="input">
+                <input type="text" pattern="[0-9]*" [disabled]="disable" (input)="checkIfExist(cCode) "class="form-control" ngModel #cCode="ngModel" [(ngModel)]="categorycode" id="categorycode" name="categorycode" required >
+                <i *ngIf="!exist && cCode.valid && cCode.touched" class="far fa-check-circle correct"></i>
+                <i *ngIf="exist && cCode.valid && cCode.touched" class="far fa-times-circle wrong"></i>
+              </div>
+              <span class="error" *ngIf="!cCode.valid && cCode.touched">Please enter a valid Category Code!</span>
+            </div>
+          <div class="form-group">
+            <label for="categoryname">Category Name</label>
+            <div class="input">
+              <input type="text" class="form-control" id="categoryname" (input)="checkIfNameExist(cName)" ngModel #cName="ngModel" [(ngModel)]="categoryname" name="categoryname" required>
+              <i *ngIf="!nExist && cName.valid && cName.touched" class="far fa-check-circle correct"></i>
+              <i *ngIf="nExist && cName.valid && cName.touched" class="far fa-times-circle wrong"></i>
+            </div>
+            <span class="error" *ngIf="!cName.valid && cName.touched">Please enter a valid Category Name!</span>
+          </div>
+          <button type="submit" class="btn btn-info" [disabled]="!addForm.valid">{{ mode }}</button>
+        </form>
+      </div>
+    </div>
+    <table class="table">
+      <caption>Categories List</caption>
+      <thead>
+        <tr>
+          <th scope="col">Code</th>
+          <th scope="col">Name</th>
+          <th scope="col">Update</th>
+          <th scope="col">Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let category of categories">
+          <th scope="row">{{ category.CategoryCode }}</th>
+          <td>{{ category.CategoryName }}</td>
+          <td><button type="button" class="btn btn-info" (click)="onEdit(category.CategoryCode)">Edit</button></td>
+          <td><button type="button" class="btn btn-danger" (click)="openModal(deleteModal, category.CategoryCode, category.CategoryName)">Delete</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <ng-template #deleteModal let-modal class="modal-lg">
+    <div class="modal-header">
+      <h3 class="modal-title" id="modal-basic-title">Delete Category</h3>
+      <button type="button" class="close" aria-label="Close" (click)="ModalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+            Are you Sure for Deleteing <span style="color: red;">{{ categoryName }}</span> Category ?
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger" (click)="onDelete()">Delete</button>
+      <button type="button" class="btn btn-outline-secondary" (click)="ModalRef.hide()">Close</button>
+    </div>
+</ng-template>

@@ -1,0 +1,104 @@
+
+<div class="loader" *ngIf="isLoading">
+  <div class="inside">
+    <app-page-loader></app-page-loader>
+  </div>
+</div>
+<div class="wrapper" *ngIf="!isLoading">
+  <input type="number" min="1" class="form-control search" (input)="searchCityCode(code.value)" placeholder="Search with City Code" #code>
+    
+  <div class="formContainer">
+    <h4>Search With City Coder & Bander</h4><br>
+        <form (ngSubmit)="searchcityCodeBandar(cityCode.value,bander.checked)" #seaarchForm="ngForm">
+          <label class="form-label" for="cityCode">
+            City Code
+          </label>
+          <input type="number" min="1" class="form-control cSearch" id="cityCode" placeholder="Search with City Code" name="cityCode" #cityCode required> 
+          <br>
+          <div class="check">
+            <input class="form-check-input" type="checkbox" id="checkBander" name="bander" #bander required>
+            <label class="form-check-label" for="checkBander">
+              Bander
+            </label>
+          </div>
+          <button type="submit" class="btn btn-info" [disabled]="!seaarchForm.valid">Search</button>
+        </form>
+  </div>
+</div>
+<div class="container" *ngIf="!isLoading">
+        <div class="form">
+          <h4>Add Region Form :</h4>
+          <div class="FormContainer">
+            <form (ngSubmit)="onSubmit(addForm)" #addForm="ngForm">
+              <div class="form-group">
+                  <label for="cityCode">Region Code</label>
+                  <div class="input">
+                    <input type="text" pattern="[0-9]*" [disabled]="disable" (input)="checkIfExist(rCode)" class="form-control" id="RegionCode" ngModel #rCode="ngModel"[(ngModel)]="RegionCode" name="RegionCode" required>
+                    <i *ngIf="!exist && rCode.valid && rCode.touched" class="far fa-check-circle correct"></i>
+                    <i *ngIf="exist && rCode.valid && rCode.touched" class="far fa-times-circle wrong"></i>
+                  </div>
+                  <span class="error" *ngIf="!rCode.valid && rCode.touched">Please enter a valid Region Code!</span>
+              </div>
+              <div class="form-group">
+                <label for="cityName">Region Name</label>
+                <div class="input">
+                  <input type="text" class="form-control" id="RegionName" (input)="checkIfNameExist(rName)" ngModel #rName="ngModel" [(ngModel)]="RegionName" name="RegionName" required>
+                  <i *ngIf="!nExist && rName.valid && rName.touched" class="far fa-check-circle correct"></i>
+                  <i *ngIf="nExist && rName.valid && rName.touched" class="far fa-times-circle wrong"></i>
+                </div>
+                <span class="error" *ngIf="!rName.valid && rName.touched">Please enter a valid Region Name!</span>
+              </div>
+              <div class="form-group cName">
+                <label class="input-group-text" for="CityCode">City Code</label>
+                <input id="typeahead-format" type="text" class="form-control" ngModel #cCode="ngModel" [(ngModel)]="CityCode" name="CityCode" id="CityCode" [ngbTypeahead]="search" [resultFormatter]="formatter" [ngModelOptions]="{standalone: true}" required/>
+                <span class="error" *ngIf="!cCode.valid && cCode.touched">Please enter a valid City Code!</span>
+              </div>
+              <br>
+              <div class="form-group">
+                <input class="form-check-input" type="checkbox" id="checkBander" [checked]="Bandar" name="bander" required>
+                <label class="form-check-label" for="checkBander">Bander</label>
+              </div>
+              <button type="submit" class="btn btn-info" [disabled]="!addForm.valid">{{ mode }}</button>
+            </form>
+          </div>
+        </div>
+        <table class="table">
+          <caption>Regions List</caption>
+          <thead>
+            <tr>
+              <th scope="col">Code</th>
+              <th scope="col">Name</th>
+              <th scope="col">City Code</th>
+              <th scope="col">Bandar</th>
+              <th scope="col">Update</th>
+              <th scope="col">Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let region of regions">
+              <th scope="row">{{ region.RegionCode }}</th>
+              <td>{{ region.RegionName }}</td>
+              <td>{{ region.CityCode }}</td>
+              <td>{{ region.Bandar }}</td>
+              <td><button type="button" class="btn btn-info" (click)="onEdit(region.RegionCode)">Update</button></td>
+              <td><button type="button" class="btn btn-danger" (click)="openModal(deleteModal, region.RegionCode, region.RegionName)">Delete</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <ng-template #deleteModal let-modal class="modal-lg">
+        <div class="modal-header">
+          <h3 class="modal-title" id="modal-basic-title">Delete Region</h3>
+          <button type="button" class="close" aria-label="Close" (click)="ModalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+                Are you Sure for Deleteing <span style="color: red;">{{ regionName }}</span> ?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" (click)="onDelete()">Delete</button>
+          <button type="button" class="btn btn-outline-secondary" (click)="ModalRef.hide()">Close</button>
+        </div>
+    </ng-template>

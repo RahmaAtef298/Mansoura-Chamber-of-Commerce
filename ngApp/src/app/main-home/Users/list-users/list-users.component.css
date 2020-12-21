@@ -1,0 +1,109 @@
+.container {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.container .form {
+  -ms-flex-preferred-size: 30%;
+      flex-basis: 30%;
+}
+
+.container table {
+  width: 650px;
+  margin: auto;
+  -ms-flex-preferred-size: 70%;
+      flex-basis: 70%;
+}
+
+.loader {
+  margin-top: 200px;
+}
+
+.loader .inside {
+  width: 50px;
+  margin: auto;
+}
+
+.wrapper {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.wrapper .search {
+  width: 320px;
+  border-radius: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: auto;
+}
+
+.FormContainer {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 1px solid #6fcce4;
+  width: 90%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+}
+
+input {
+  width: 100%;
+}
+
+.error {
+  color: red;
+}
+
+.custom-select {
+  width: 100%;
+}
+
+.correct {
+  color: lime;
+}
+
+.input {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.input input {
+  -ms-flex-preferred-size: 100%;
+      flex-basis: 100%;
+}
+
+.input i {
+  -ms-flex-preferred-size: 5%;
+      flex-basis: 5%;
+}
+
+.correct {
+  color: lime;
+  padding-top: 10px;
+  margin-left: 5px;
+}
+
+.wrong {
+  color: red;
+  padding-top: 10px;
+  margin-left: 5px;
+}
+
+input.ng-invalid.ng-touched {
+  border: 1px solid red;
+}
+
+form {
+  width: 100%;
+  margin: 20px;
+}
+/*# sourceMappingURL=list-users.component.css.map */

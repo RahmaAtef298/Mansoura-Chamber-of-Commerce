@@ -1,0 +1,146 @@
+.formContainer {
+  padding: 20px;
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 1px solid #6fcce4;
+  width: 40%;
+}
+
+.formContainer h4 {
+  margin: auto;
+  text-align: center;
+}
+
+.formContainer form .form-label {
+  margin-left: 10px;
+}
+
+.formContainer .cSearch {
+  text-align: center;
+  width: 85%;
+}
+
+.container {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+}
+
+.container .form {
+  -ms-flex-preferred-size: 30%;
+      flex-basis: 30%;
+}
+
+.container table {
+  width: 650px;
+  margin: auto;
+  -ms-flex-preferred-size: 70%;
+      flex-basis: 70%;
+}
+
+.loader {
+  margin-top: 200px;
+}
+
+.loader .inside {
+  width: 50px;
+  margin: auto;
+}
+
+.wrapper {
+  margin-top: 20px;
+}
+
+.wrapper .search {
+  border: 1px solid #6fcce4;
+  width: 320px;
+  margin: auto;
+  border-radius: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.FormContainer {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 1px solid #6fcce4;
+  width: 90%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+}
+
+input {
+  width: 100%;
+}
+
+.custom-select {
+  width: 100%;
+}
+
+input.ng-invalid.ng-touched {
+  border: 1px solid red;
+}
+
+.error {
+  color: red;
+}
+
+.input {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.input input {
+  -ms-flex-preferred-size: 100%;
+      flex-basis: 100%;
+}
+
+.input i {
+  -ms-flex-preferred-size: 5%;
+      flex-basis: 5%;
+}
+
+.correct {
+  color: lime;
+  padding-top: 10px;
+  margin-left: 5px;
+}
+
+.wrong {
+  color: red;
+  padding-top: 10px;
+  margin-left: 5px;
+}
+
+form {
+  margin: 20px;
+  width: 100%;
+}
+
+.imgcontainer {
+  width: 30%;
+}
+
+img {
+  margin-top: 50px;
+  width: 200px;
+  height: 200px;
+}
+
+.form-check-input {
+  margin-left: -110px;
+}
+
+.form-check-label {
+  margin-left: -90px;
+}
+/*# sourceMappingURL=list-regions.component.css.map */

@@ -1,0 +1,98 @@
+@import url(https://fonts.googleapis.com/earlyaccess/droidarabicnaskh.css);
+body{
+    font-family:'Droid Arabic Naskh', "serif";
+}
+
+.container{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 95%;
+    .form{
+        width: 95%;
+        margin: 20px;
+        .form-row{
+            padding-bottom: 20px;
+        }
+    }
+}
+
+.loader{
+    margin-top: 200px;
+    .inside{
+        width: 50px;
+        margin: auto;
+    }
+}
+
+.FormContainer{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-top: 20px;
+    border: 1px solid rgb(111, 204, 228);
+}
+
+.input{
+    display: flex;
+    input{
+        flex-basis: 100%;
+    }
+}
+
+
+i{
+    flex-basis: 5%;
+    color: red;
+    font-size: 20px;
+}
+
+.button{
+    width: 500px;
+    margin-left: 20px;
+}
+
+input.ng-invalid.ng-touched {
+    border: 1px solid red;
+}
+ 
+.checkbox {
+    margin-left: 20px;
+    .form-check-input{
+        width: 15px;
+        height: 15px;
+    }
+}
+
+.error{
+    color : red;
+}
+
+#image{
+    visibility: hidden;
+}
+
+.submit{
+    visibility: hidden;
+}
+
+.addRecord{
+    margin-left: 70px;
+}
+
+.image-preview {
+    height: 50px;
+    width: 50px;
+    margin-left: 50px;
+    margin-top: -20px;
+}
+  
+.image-preview img {
+    height: 100%;
+}
+
+.Label{
+    margin-left: -70px;
+}
+
+.traderPhotoButton{
+    margin-top: 30px;
+}

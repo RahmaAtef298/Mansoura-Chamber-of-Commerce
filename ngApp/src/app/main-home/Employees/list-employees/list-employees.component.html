@@ -1,0 +1,68 @@
+<div class="loader" *ngIf="isLoading">
+  <div class="inside">
+    <app-page-loader></app-page-loader>
+  </div>
+</div>
+<div class="container" *ngIf="!isLoading">
+    <div class="form">
+      <h4>Add Employee Form :</h4>
+      <div class="FormContainer">
+        <form (ngSubmit)="onSubmit(addForm)" #addForm="ngForm">
+          <div class="form-group">
+              <label for="EmployeeId">Employee Id</label>
+              <div class="input">
+                <input type="text" pattern="[0-9]*" [disabled]="disable" (input)="checkIfExist(eCode)" class="form-control" id="EmployeeId" ngModel #eCode="ngModel" [(ngModel)]="EmployeeId" name="EmployeeId" required>
+                <i *ngIf="!exist && eCode.valid && eCode.touched" class="far fa-check-circle correct"></i>
+                <i *ngIf="exist && eCode.valid && eCode.touched" class="far fa-times-circle wrong"></i>
+              </div>
+              <span class="error" *ngIf="!eCode.valid && eCode.touched">Please enter a valid Employee Id!</span>
+            </div>
+          <div class="form-group">
+            <label for="EmployeeName">Employee Name</label>
+            <div class="input">
+              <input type="text" class="form-control" id="EmployeeName" (input)="checkIfNameExist(eName)" ngModel #eName="ngModel" [(ngModel)]="EmployeeName" name="EmployeeName" required>
+              <i *ngIf="!nExist && eName.valid && eName.touched" class="far fa-check-circle correct"></i>
+              <i *ngIf="nExist && eName.valid && eName.touched" class="far fa-times-circle wrong"></i>
+            </div>
+            <span class="error" *ngIf="!eName.valid && eName.touched">Please enter a valid Employee Name!</span>
+          </div>
+          <button type="submit" class="btn btn-info" [disabled]="!addForm.valid">{{ mode }}</button>
+        </form>
+      </div>
+    </div>
+    <table class="table">
+      <caption>Employees List</caption>
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Name</th>
+          <th scope="col">Update</th>
+          <th scope="col">Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let employee of employees">
+          <th scope="row">{{ employee.EmployeeID }}</th>
+          <td>{{ employee.EmployeeName }}</td>
+          <td><button type="button" class="btn btn-info" (click)="onEdit(employee.EmployeeID)">Update</button></td>
+          <td><button type="button" class="btn btn-danger" (click)="openModal(deleteModal, employee.EmployeeID, employee.EmployeeName)">Delete</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <ng-template #deleteModal let-modal class="modal-lg">
+    <div class="modal-header">
+      <h3 class="modal-title" id="modal-basic-title">Delete Employee</h3>
+      <button type="button" class="close" aria-label="Close" (click)="ModalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+            Are you Sure for Deleteing <span style="color: red;">{{ employeeName }}</span>  ?
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger" (click)="onDelete()">Delete</button>
+      <button type="button" class="btn btn-outline-secondary" (click)="ModalRef.hide()">Close</button>
+    </div>
+</ng-template>

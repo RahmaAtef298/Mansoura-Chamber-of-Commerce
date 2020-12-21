@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<title>Admin Panal</title>
+</head>
+
+<body>
+	<!-- WRAPPER -->
+	<div id="wrapper">
+		<!-- NAVBAR -->
+		<nav class="navbar navbar-default navbar-fixed-top">
+			<div class="container-fluid contain">
+				<div class="navbar-btn">
+					<div class="brand">
+						<a routerLink="/Home"><img src="assets/img/logo.png" style="width: 150px;height: 35px;margin: -20px;" alt="Klorofil Logo" class="img-responsive logo"></a>
+					</div>
+					<button type="button" class="btn-toggle-fullwidth"><i class="lnr lnr-arrow-left-circle"></i></button>
+				</div>
+				<a class="navbar-logout" routerLink="/AddUser">Add User</a>
+				<a class="navbar-logout" (click)="Logout()">Logout</a>
+			</div>
+		</nav>
+		<!-- END NAVBAR -->
+		<!-- LEFT SIDEBAR -->
+		<div id="sidebar-nav" class="sidebar">
+			<div class="sidebar-scroll">
+				<nav>
+					<ul class="nav">
+						<li><a routerLink="/Home" class="active"><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
+						<li>
+							<a href="#Users" data-toggle="collapse" class="collapsed"><i class="lnr lnr-code"></i> 
+								<span>Users</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							<div id="Users" class="collapse ">
+								<ul class="nav">
+									<li><a routerLink="/list/ListUsers" class="">List Users</a></li>
+								</ul>
+							</div>
+						</li>
+						<li>
+							<a href="#Categories" data-toggle="collapse" class="collapsed"><i class="lnr lnr-code"></i> 
+								<span>Categories</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							<div id="Categories" class="collapse ">
+								<ul class="nav">
+									<li><a routerLink="/list/ListCategories" class="">List Categories</a></li>
+								</ul>
+							</div>
+						</li>
+						<li>
+							<a href="#subCategories" data-toggle="collapse" class="collapsed"><i class="lnr lnr-code"></i> 
+								<span>Sub Categories</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							<div id="subCategories" class="collapse ">
+								<ul class="nav">
+									<li><a routerLink="/list/ListSubCategories" class="">List SubCategories</a></li>
+								</ul>
+							</div>
+						</li>
+						<li>
+							<a href="#Cities" data-toggle="collapse" class="collapsed"><i class="lnr lnr-code"></i> 
+								<span>Cities</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							<div id="Cities" class="collapse ">
+								<ul class="nav">
+									<li><a routerLink="/list/ListCities" class="">List Cities</a></li>
+								</ul>
+							</div>
+						</li>
+						<li>
+							<a href="#Regions" data-toggle="collapse" class="collapsed"><i class="lnr lnr-code"></i> 
+								<span>Regions</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							<div id="Regions" class="collapse ">
+								<ul class="nav">
+									<li><a routerLink="/list/ListRegions" class="">List Regions</a></li>
+								</ul>
+							</div>
+						</li>
+						<li>
+							<a href="#Employees" data-toggle="collapse" class="collapsed"><i class="lnr lnr-code"></i> 
+								<span>Employees</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							<div id="Employees" class="collapse ">
+								<ul class="nav">
+									<li><a routerLink="/list/ListEmployees" class="">List Employees</a></li>
+								</ul>
+							</div>
+						</li>
+						<li>
+							<a href="#Governates" data-toggle="collapse" class="collapsed"><i class="lnr lnr-code"></i> 
+								<span>Governates</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							<div id="Governates" class="collapse ">
+								<ul class="nav">
+									<li><a routerLink="/list/ListGovernates" class="">List Governates</a></li>
+								</ul>
+							</div>
+						</li>
+						<li>
+							<a href="#CommericalRegisters" data-toggle="collapse" class="collapsed"><i class="lnr lnr-code"></i> 
+								<span>Commerical Registers</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							<div id="CommericalRegisters" class="collapse ">
+								<ul class="nav">
+									<li><a routerLink="/list/ListCommericalRegisters" class="">List Commerical Registers</a></li>
+								</ul>
+							</div>
+						</li>
+						<li>
+							<a href="#ShahrAqary" data-toggle="collapse" class="collapsed"><i class="lnr lnr-code"></i> 
+								<span>Shahr Aqary</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							<div id="ShahrAqary" class="collapse ">
+								<ul class="nav">
+									<li><a routerLink="/list/ListShahrAqary" class="">List Shahr Aqary</a></li>
+								</ul>
+							</div>
+						</li>
+						<li>
+							<a href="#IncorporationActs" data-toggle="collapse" class="collapsed"><i class="lnr lnr-code"></i> 
+								<span>Incorporation Acts</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							<div id="IncorporationActs" class="collapse ">
+								<ul class="nav">
+									<li><a routerLink="/list/ListIncorporationActs" class="">List Incorporation Acts</a></li>
+								</ul>
+							</div>
+						</li>
+						<li>
+							<a href="#CommericalRecords" data-toggle="collapse" class="collapsed"><i class="lnr lnr-code"></i> 
+								<span>Commerical Records</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							<div id="CommericalRecords" class="collapse ">
+								<ul class="nav">
+									<li><a routerLink="/records/addCommericalRecord" class="">Add Commerical Records</a></li>
+									<li><a routerLink="/records/searchCommericalRecords" class="">Search Commerical Records</a></li>
+								</ul>
+							</div>
+						</li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+		<!-- END LEFT SIDEBAR -->
+		<!-- MAIN -->
+		<div class="main">
+			<!-- MAIN CONTENT -->
+			<div class="main-content">
+				<router-outlet></router-outlet>
+				
+			</div>
+			<!-- END MAIN CONTENT -->
+		</div>
+		<!-- END MAIN -->
+		<div class="clearfix"></div>
+		<footer>
+			<div class="container-fluid">
+				<p class="copyright">&copy; 2020 
+					<a href="https://www.themeineed.com" target="_blank">Rahma Atef</a>. All Rights Reserved.</p>
+			</div>
+		</footer>
+	</div>
+	<!-- END WRAPPER -->
+	<!-- Javascript -->
+	
+	
+</body>
+
+</html>

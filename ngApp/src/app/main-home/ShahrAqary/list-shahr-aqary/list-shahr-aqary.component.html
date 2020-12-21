@@ -1,0 +1,72 @@
+
+<div class="loader" *ngIf="isLoading">
+  <div class="inside">
+    <app-page-loader></app-page-loader>
+  </div>
+</div>
+<div class="wrapper" *ngIf="!isLoading">
+    <input type="number" min="1" class="form-control search" (input)="searchShahrAqaryId(id.value)" placeholder="Search with ShahrAqary ID" #id>
+</div>
+<div class="container" *ngIf="!isLoading">
+        <div class="form">
+          <h4>Add Shahr Aqary Form :</h4>
+          <div class="FormContainer">
+            <form (ngSubmit)="onSubmit(addForm)" #addForm="ngForm">
+              <div class="form-group">
+                  <label for="ShahrAqaryId">ShahrAqary Id</label>
+                  <div class="input">
+                    <input type="text" pattern="[0-9]*" [disabled]="disable" (input)="checkIfExist(SACode)" class="form-control" id="ShahrAqaryId" ngModel #SACode="ngModel" [(ngModel)]="ShahrAqaryId" name="ShahrAqaryId" required>
+                    <i *ngIf="!exist && SACode.valid && SACode.touched" class="far fa-check-circle correct"></i>
+                    <i *ngIf="exist && SACode.valid && SACode.touched" class="far fa-times-circle wrong"></i>
+                  </div>
+                  <span class="error" *ngIf="!SACode.valid && SACode.touched">Please enter a valid ShahrAqary Id!</span>
+                </div>
+              <div class="form-group">
+                <label for="ShahrAqaryName">ShahrAqary Name</label>
+                <div class="input">
+                  <input type="text" class="form-control" id="ShahrAqaryName" (input)="checkIfNameExist(SAName)" ngModel #SAName="ngModel" [(ngModel)]="ShahrAqaryName" name="ShahrAqaryName" required>
+                  <i *ngIf="!nExist && SAName.valid && SAName.touched" class="far fa-check-circle correct"></i>
+                  <i *ngIf="nExist && SAName.valid && SAName.touched" class="far fa-times-circle wrong"></i>
+                </div>
+                <span class="error" *ngIf="!SAName.valid && SAName.touched">Please enter a valid ShahrAqary Name!</span>
+              </div>
+              <button type="submit" class="btn btn-info" [disabled]="!addForm.valid">{{ mode }}</button>
+            </form>
+          </div>
+        </div>
+        <table class="table">
+          <caption>ShahrAqary List</caption>
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Name</th>
+              <th scope="col">Update</th>
+              <th scope="col">Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let shahrAqary of shahrAqaryS">
+              <th scope="row">{{ shahrAqary.ShahrAqaryID }}</th>
+              <td>{{ shahrAqary.ShahrAqaryName }}</td>
+              <td><button type="button" class="btn btn-info" (click)="onEdit(shahrAqary.ShahrAqaryID)">Update</button></td>
+              <td><button type="button" class="btn btn-danger" (click)="openModal(deleteModal, shahrAqary.ShahrAqaryID, shahrAqary.ShahrAqaryName)">Delete</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <ng-template #deleteModal let-modal class="modal-lg">
+        <div class="modal-header">
+          <h3 class="modal-title" id="modal-basic-title">Delete ShahrAqary</h3>
+          <button type="button" class="close" aria-label="Close" (click)="ModalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+                Are you Sure for Deleteing <span style="color: red;">{{ SAName }}</span> ?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" (click)="onDelete()">Delete</button>
+          <button type="button" class="btn btn-outline-secondary" (click)="ModalRef.hide()">Close</button>
+        </div>
+    </ng-template>

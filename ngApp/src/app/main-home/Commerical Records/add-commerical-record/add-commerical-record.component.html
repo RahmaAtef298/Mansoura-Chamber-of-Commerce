@@ -1,0 +1,657 @@
+
+
+<!-- <div class="loader" *ngIf="isLoading">
+    <div class="inside">
+      <app-page-loader></app-page-loader>
+    </div>
+</div> -->
+<div *ngIf="!isLoading">
+<form (ngSubmit)="onSubmit(addForm)" #addForm="ngForm">
+  <ngb-tabset [destroyOnHide]="false">
+    <ngb-tab>
+      <ng-template ngbTabTitle>Main Data</ng-template> 
+      <ng-template ngbTabContent>
+      <div class="container">
+        <div class="form">
+         <div class="FormContainer">
+                <div class="form-row">
+                    <div class="form-group col-sm-3">
+                        <label for="recordNumber">Record Number :</label><i>*</i>
+                        <div class="input">
+                          <input type="number" min="1" class="form-control" id="recordNumber" name="recordNumber" ngModel #recordNum="ngModel" [(ngModel)]="commericalAll.CommercialRecordsDto.RecordNumber" placeholder="Recore Namber" required>
+                        </div>
+                        <span class="error" *ngIf="!recordNum.valid && recordNum.touched">This Field is Required</span>
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label for="ownerName">Owner Name :</label><i>*</i>
+                        <div class="input">
+                          <input type="text" class="form-control" id="ownerName" name="ownerName" ngModel #ownerN="ngModel" [(ngModel)]="commericalAll.CommercialRecordsDto.OwnerName" placeholder="Owner Name" required>
+                        </div>
+                        <span class="error" *ngIf="!ownerN.valid && ownerN.touched">This Field is Required</span>
+                    </div>
+                    <div class="form-group col-sm-3">
+                      <label for="address">Address :</label>
+                      <div class="input">
+                        <input type="text" class="form-control" id="address" name="address" ngModel #addr="ngModel" [(ngModel)]="commericalAll.CommercialRecordsDto.Address" placeholder="Address">
+                      </div>
+                  </div>
+                  <div class="form-group col-sm-3">
+                      <label for="phone">Phone :</label><i>*</i>
+                      <div class="input">
+                        <input type="text" class="form-control" id="phone" name="phone" ngModel #ph="ngModel" [(ngModel)]="commericalAll.CommercialRecordsDto.Phone" placeholder="Phone" required>
+                      </div>
+                      <span class="error" *ngIf="!ph.valid && ph.touched">This Field is Required</span>
+                  </div>
+                </div>
+                <div class="form-group col-sm-12"></div>
+                <div class="form-row">
+                    <div class="form-group col-sm-2">
+                        <label for="city">City :</label><i>*</i>
+                        <div class="input">
+                          <input type="text" class="form-control" id="cityName" name="cityName" ngModel #cName="ngModel" (change)="getCity(cName)" [(ngModel)]="cityName" [ngbTypeahead]="searchCities" [resultFormatter]="formatter" [ngModelOptions]="{standalone: true}" placeholder="Choose City" required>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-2">
+                        <label for="region">Region :</label><i>*</i>
+                        <div class="input">
+                          <input type="text" class="form-control" id="regionName" name="regionName" ngModel #rName="ngModel" (change)="getRegion(rName)" [(ngModel)]="regionName" [ngbTypeahead]="searchRegions" [resultFormatter]="formatter" [ngModelOptions]="{standalone: true}"  placeholder="Choose Region" required>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label for="organization">Organization :</label><i>*</i>
+                        <div class="input">
+                          <input type="text" class="form-control" id="organizationName" name="organizationName" ngModel #oName="ngModel" (change)="getOrganization(oName)" [(ngModel)]="organizationName" [ngbTypeahead]="searchOrganizations" [resultFormatter]="formatter" [ngModelOptions]="{standalone: true}" placeholder="Choose Organization" required>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-2">
+                        <label for="category">Category : </label>
+                        <div class="input">
+                          <input type="text" class="form-control" id="categoryName" name="categoryName" ngModel #catName="ngModel" (change)="getCategory(catName)" [(ngModel)]="categoryName" [ngbTypeahead]="searchCategories" [resultFormatter]="formatter" [ngModelOptions]="{standalone: true}" placeholder="Choose Category">
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label for="subcategory">Subcategory :</label><i>*</i>
+                        <!-- <div class="input">
+                          <input type="text" class="form-control" id="subCategoryName" name="subCategoryName" ngModel #subName="ngModel" (change)="getSubCategory(subName)" [(ngModel)]="subCategoryName" [ngbTypeahead]="searchSubCategories" [resultFormatter]="formatter" [ngModelOptions]="{standalone: true}" placeholder="Choose SubCategory" multiple>
+                        </div> -->
+                        <ng-multiselect-dropdown
+                        [placeholder]="'Choose'"
+                        [data]="subCategories"
+                        [settings]="dropdownSettings"
+                        (onSelect)="onItemSelect($event)"
+                        (onSelectAll)="onSelectAll($event)"
+                        (change)="readData(selected)"
+                        id="selectedData"
+                        name="selectedData" 
+                        ngModel 
+                        #selected="ngModel" 
+                        [(ngModel)]="selectedData"
+                        required>
+                      </ng-multiselect-dropdown>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-sm-3">
+                        <label for="capital1">Capital1 :</label><i>*</i>
+                        <div class="input">
+                          <input type="text" class="form-control" id="capital1" name="capital1" ngModel #cap1="ngModel" [(ngModel)]="commericalAll.CommercialRecordsDto.Capital1" placeholder="Capital1" required>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label for="capital2">Capital2 :</label><i>*</i>
+                        <div class="input">
+                          <input type="text" class="form-control" id="capital2" name="capital2" ngModel #cap2="ngModel" [(ngModel)]="commericalAll.CommercialRecordsDto.Capital2" placeholder="Capital2" required>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label for="amount1">Amount1 :</label>
+                        <div class="input">
+                          <input type="text" class="form-control" id="amount1" name="amount1" ngModel #am1="ngModel" [(ngModel)]="commericalAll.CommercialRecordsDto.Amount" placeholder="Amount1">
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label for="amount2">Amount2 :</label>
+                        <div class="input">
+                          <input type="text" class="form-control" id="amount2" name="amount2" ngModel #am2="ngModel" [(ngModel)]="commericalAll.CommercialRecordsDto.Amount2" placeholder="Amount2">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-sm-4">
+                        <div class="checkbox">
+                            <input class="form-check-input" type="checkbox" id="IsBankrupted" name="IsBankrupted" [(ngModel)]="commericalAll.CommercialRecordsDto.IsBankrupted">
+                            <label class="form-check-label" for="IsBankrupted">Is Bankrupted</label>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <div class="checkbox">
+                            <input class="form-check-input" type="checkbox" id="IsVoided" name="IsVoided" [(ngModel)]="commericalAll.CommercialRecordsDto.IsVoided">
+                            <label class="form-check-label" for="IsVoided">Is Voided</label>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <div class="checkbox">
+                            <input class="form-check-input" type="checkbox" id="IsBandar" name="IsBandar" [(ngModel)]="commericalAll.CommercialRecordsDto.IsBandar">
+                            <label class="form-check-label" for="IsBandar">Is Bandar</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-sm-4">
+                        <div class="checkbox">
+                            <input class="form-check-input" type="checkbox" id="hasCard" name="hasCard" [(ngModel)]="commericalAll.CommercialRecordsDto.HasCard">
+                            <label class="form-check-label" for="hasCard">Has Card</label>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <div class="checkbox">
+                            <input class="form-check-input" type="checkbox" id="IsDoublicated" name="IsDoublicated" [(ngModel)]="commericalAll.CommercialRecordsDto.IsDoublicated">
+                            <label class="form-check-label" for="IsDoublicated">Is Doublicated</label>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-4">
+                      <div class="checkbox">
+                          <input class="form-check-input" type="checkbox" id="IsRealStartDate" name="IsRealStartDate" [(ngModel)]="commericalAll.CommercialRecordsDto.IsRealStartDate">
+                          <label class="form-check-label" for="IsRealStartDate">Is RealStartDate</label>
+                      </div>
+                  </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-sm-3">
+                        <label for="unpaid">Unpaid :</label>
+                        <div class="input">
+                          <input type="text" class="form-control" id="unpaid" name="unpaid" ngModel #unP="ngModel" [(ngModel)]="commericalAll.CommercialRecordsDto.Unpaid" placeholder="unpaid" >
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label for="startDate">Start Date :</label><i>*</i>
+                        <div class="input">
+                          <input type="date" class="form-control" id="startDate" name="startDate" ngModel #startD="ngModel" [(ngModel)]="commericalAll.CommercialRecordsDto.StartDate" placeholder="Start Date" required>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label for="notes">Notes :</label>
+                        <div class="input">
+                          <input type="text" class="form-control" id="notes" name="notes" ngModel #note="ngModel" [(ngModel)]="commericalAll.CommercialRecordsDto.Notes" placeholder="Notes ">
+                        </div>
+                    </div>
+                </div>
+                <div class="button">
+                    <br>
+                    <button type="submit" class="btn btn-info submit">Add</button>
+                </div>
+         </div>
+        </div>
+       </div>
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab>
+      <ng-template ngbTabTitle>Low Data</ng-template>
+      <ng-template ngbTabContent>
+        <div class="container">
+          <div class="form">
+           <div class="FormContainer">
+                  <div class="form-row">
+                      <div class="form-group col-sm-3">
+                          <label for="licenseApplicant">License Applicant :</label>
+                          <div class="input">
+                            <input type="text" class="form-control" id="licenseApplicant" name="licenseApplicant" ngModel #licenseApp="ngModel" [(ngModel)]="commericalAll.RecordLawDto.TalebAltarkhees" placeholder="License Applicant">
+                          </div>
+                      </div> 
+                      <div class="form-group col-sm-3">
+                          <label for="adjective">Adjective :</label>
+                          <div class="input">
+                            <input type="text" class="form-control" id="adjective" name="adjective" ngModel #adj="ngModel" [(ngModel)]="adjective" (change)="getAdjective(adj)" [ngbTypeahead]="searchAdjectives" [resultFormatter]="formatter" [ngModelOptions]="{standalone: true}" placeholder="Adjective">
+                          </div>
+                      </div>
+                      <div class="form-group col-sm-3">
+                          <label for="mandateType">Mandate Type :</label>
+                          <div class="input">
+                            <input type="text" class="form-control" id="mandateType" name="mandateType" ngModel #manType="ngModel" [(ngModel)]="mandateType" [disabled]="adjectiveId==1" (change)="getMandate(manType)" [ngbTypeahead]="searchMandate" [resultFormatter]="formatter" [ngModelOptions]="{standalone: true}" placeholder="Mandate Type">
+                          </div>
+                      </div>
+                      <div class="form-group col-sm-3">
+                          <label for="mandateNumber">Mandate Number :</label>
+                          <div class="input">
+                            <input type="number" min="1" class="form-control" id="mandateNumber" name="mandateNumber" ngModel #manNum="ngModel" [(ngModel)]="commericalAll.RecordLawDto.TawkeelNumber" placeholder="Mandate Number">
+                          </div>
+                      </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-sm-4">
+                        <label for="commericalFeature">Commerical Feature :</label>
+                        <div class="input">
+                          <input type="text" class="form-control" id="commericalFeature" name="commericalFeature" ngModel #licenseApp="ngModel" [(ngModel)]="commericalAll.RecordLawDto.SemaTojarya" placeholder="Commerical Feature">
+                        </div>
+                    </div> 
+                    <div class="form-group col-sm-4">
+                        <label for="commericalName">Commerical Name :</label>
+                        <div class="input">
+                          <input type="text" class="form-control" id="commericalName" name="commericalName" ngModel #commericalN="ngModel" [(ngModel)]="commericalAll.RecordLawDto.CommercialRegistrationNo" placeholder="Commerical Name">
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <label for="shahrAqary">Shahr Aqary :</label>
+                        <div class="input">
+                          <input type="text" class="form-control" id="shahrAqary" name="shahrAqary" ngModel #shahr="ngModel" [(ngModel)]="shahrAqary" (change)="getShahrAqary(shahr)" [ngbTypeahead]="searchShahrAqary" [resultFormatter]="formatter" [ngModelOptions]="{standalone: true}" placeholder="Shahr Aqary">
+                        </div>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                  <div class="form-group col-sm-3">
+                      <label for="compositionBy">Composition By :</label>
+                      <div class="input">
+                        <input type="text" class="form-control" id="compositionBy" name="compositionBy" ngModel #comBy="ngModel" [(ngModel)]="compositionBy" (change)="getComposition(comBy)" [ngbTypeahead]="searchCompositions" [resultFormatter]="formatter" [ngModelOptions]="{standalone: true}" placeholder="Composition By">
+                      </div>
+                  </div> 
+                  <div class="form-group col-sm-3">
+                      <label for="compositionSide">Composition Side :</label>
+                      <div class="input">
+                        <input type="text" class="form-control" id="compositionSide" name="compositionSide" ngModel #comSide="ngModel" [(ngModel)]="commericalAll.RecordLawDto.CompositionGeha" placeholder="Composition Side">
+                      </div>
+                  </div>
+                  <div class="form-group col-sm-3">
+                      <label for="compositionNum">Composition Number :</label>
+                      <div class="input">
+                        <input type="number" min="1" class="form-control" id="compositionNum" name="compositionNum" ngModel #comNum="ngModel" [(ngModel)]="commericalAll.RecordLawDto.CompositionNumber" placeholder="Composition Number">
+                      </div>
+                  </div>
+                  <div class="form-group col-sm-3">
+                      <label for="compositionDate">Composition Number :</label>
+                      <div class="input">
+                        <input type="date" class="form-control" id="compositionDate" name="compositionDate" ngModel #comDate="ngModel" [(ngModel)]="commericalAll.RecordLawDto.CompositionDate" placeholder="Composition Date">
+                      </div>
+                  </div>
+                  </div>
+                  <div class="form-row">
+                <div class="form-group col-sm-3">
+                    <label for="companyName">Company Name :</label>
+                    <div class="input">
+                      <input type="text" class="form-control" id="companyName" name="companyName" ngModel #comName="ngModel" [(ngModel)]="companyName" (change)="getCompanyType(comName)" [ngbTypeahead]="searchCompanyTypes" [resultFormatter]="formatter" [ngModelOptions]="{standalone: true}" placeholder="Company Name">
+                    </div>
+                </div> 
+                <div class="form-group col-sm-3">
+                    <label for="traderNickName">Trader NickName :</label>
+                    <div class="input">
+                      <input type="text" class="form-control" id="traderNickName" name="traderNickName" ngModel #nickName="ngModel" [(ngModel)]="commericalAll.RecordLawDto.NickName" placeholder="Trader NickName">
+                    </div>
+                </div>
+                <div class="form-group col-sm-3">
+                    <label for="organizationType">Organization Type :</label>
+                    <div class="input">
+                      <input type="text" class="form-control" id="organizationType" name="organizationType" ngModel #orgType="ngModel" [(ngModel)]="organizationType" (change)="getOrgType(orgType)" [ngbTypeahead]="searchOrgTypes" [resultFormatter]="formatter" [ngModelOptions]="{standalone: true}" placeholder="Organization Type">
+                    </div>
+                </div>
+                <div class="form-group col-sm-3">
+                    <label for="organizationState">Organization Status :</label>
+                    <div class="input">
+                      <input type="text" class="form-control" id="organizationState" name="organizationState" ngModel #orgStatus="ngModel" [(ngModel)]="organizationState" [disabled]="orgTypeId==1" (change)="getOrgState(orgStatus)" [ngbTypeahead]="searchOrgStatus" [resultFormatter]="formatter" [ngModelOptions]="{standalone: true}" placeholder="Organization Status">
+                    </div>
+                </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-sm-4">
+                      <label for="incorporationAct">Incorporation Act :</label>
+                      <div class="input">
+                        <input type="text" class="form-control" id="incorporationAct" name="incorporationAct" ngModel #incorAct="ngModel" [(ngModel)]="commericalAll.RecordLawDto.ActOfIncorporationId" placeholder="Incorporation Act">
+                      </div>
+                  </div> 
+                  <div class="form-group col-sm-4">
+                      <label for="commericalRegister">Commerical Register ID :</label><i>*</i>
+                      <div class="input">
+                        <input type="number" min="1" class="form-control" id="commericalRegister" name="commericalRegister" ngModel #comRegister="ngModel" [(ngModel)]="commericalAll.RecordLawDto.RegisterCommercialID" placeholder="Commerical Register" required>
+                      </div>
+                  </div>
+                  <div class="form-group col-sm-4">
+                      <label for="governate">Governate :</label>
+                      <div class="input">
+                        <input type="text" class="form-control" id="governate" name="governate" ngModel #gov="ngModel" [(ngModel)]="governate" (change)="getGovernate(gov)" [ngbTypeahead]="searchGovernates" [resultFormatter]="formatter" [ngModelOptions]="{standalone: true}" placeholder="Governate">
+                      </div>
+                  </div>
+                  </div>
+                  <div class="button">
+                <br>
+                <button type="button" class="btn btn-info" (click)="openPartnerModal(partenerData)">Partner Data</button>&nbsp;<br>
+                <button type="submit" class="btn btn-info submit">Add</button>
+                  </div>
+        </div>
+      </div>
+      </div>
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab>
+        <ng-template ngbTabTitle>Activity Data</ng-template>
+        <ng-template ngbTabContent>
+          <div class="container">
+            <div class="form">
+             <div class="FormContainer">
+                    <div class="form-row">
+                        <div class="form-group col-sm-3">
+                            <label for="errandCode">Errand Code :</label>
+                            <div class="input">
+                              <input type="text" class="form-control" id="errandCode" name="errandCode" ngModel #errCode="ngModel" [(ngModel)]="commericalAll.ActivityDto.CodeMaamorya" placeholder="Errand Code">
+                            </div>
+                        </div> 
+                        <div class="form-group col-sm-3">
+                            <label for="feesDate">Fees Date :</label>
+                            <div class="input">
+                              <input type="date" class="form-control" id="feesDate" name="feesDate" ngModel #feDate="ngModel" [(ngModel)]="commericalAll.ActivityDto.TarekhRosom" placeholder="Fees Date">
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-3">
+                            <label for="cityDivision">City Division :</label>
+                            <div class="input">
+                              <input type="text" class="form-control" id="cityDivision" name="cityDivision" ngModel #cityDiv="ngModel" [(ngModel)]="commericalAll.ActivityDto.TaqseemMadena" placeholder="City Division">
+                            </div>
+                        </div> 
+                        <div class="form-group col-sm-3">
+                            <label for="regionDivision">Regions Division :</label>
+                            <div class="input">
+                              <input type="text" class="form-control" id="regionDivision" name="regionDivision" ngModel #regionsDiv="ngModel" [(ngModel)]="commericalAll.ActivityDto.TakseemManateqa" placeholder="Region Division">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col-sm-2">
+                          <label for="belongTo">Belong To :</label>
+                          <div class="input">
+                            <input type="text" class="form-control" id="belongTo" name="belongTo" ngModel #belong="ngModel" [(ngModel)]="commericalAll.ActivityDto.Bemelk" placeholder="Belong To">
+                          </div>
+                      </div> 
+                      <div class="form-group col-sm-2">
+                          <label for="workDate">ًWork Date :</label>
+                          <div class="input">
+                            <input type="date" class="form-control" id="workDate" name="workDate" ngModel #wDate="ngModel" [(ngModel)]="commericalAll.ActivityDto.TarekhShaghlEleen" placeholder="Work Date">
+                          </div>
+                      </div>
+                      <div class="form-group col-sm-3">
+                        <label for="docNumber">Documentation Number :</label>
+                        <div class="input">
+                          <input type="text" class="form-control" id="docNumber" name="docNumber" ngModel #docNum="ngModel" [(ngModel)]="commericalAll.ActivityDto.NehayetAqdEgar" placeholder="Documentation Number">
+                        </div>
+                      </div>
+                      <div class="form-group col-sm-2">
+                          <label for="BetaqaDarebya">Betaqa Darebya :</label><i>*</i>
+                          <div class="input">
+                            <input type="text" class="form-control" id="BetaqaDarebya" name="BetaqaDarebya" ngModel #BDarebya="ngModel" [(ngModel)]="commericalAll.ActivityDto.BetaqaDarebya" placeholder="Betaqa Darebya" required>
+                          </div>
+                      </div> 
+                      <div class="form-group col-sm-3">
+                          <label for="MalafDareby">Malaf Dareby :</label><i>*</i>
+                          <div class="input">
+                            <input type="text" class="form-control" id="MalafDareby" name="MalafDareby" ngModel #MDareby="ngModel" [(ngModel)]="commericalAll.ActivityDto.MalafDareby" placeholder="Malaf Dareby" required>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-sm-4">
+                        <label for="realEstateNumber">Real Estate Number :</label>
+                        <div class="input">
+                          <input type="text" class="form-control" id="realEstateNumber" name="realEstateNumber" ngModel #realEsNum="ngModel" [(ngModel)]="commericalAll.ActivityDto.RaqamAqar" placeholder="Real Estate Number">
+                        </div>
+                    </div> 
+                    <div class="form-group col-sm-4">
+                        <label for="flatNumber">Flat Number :</label>
+                        <div class="input">
+                          <input type="text" class="form-control" id="flatNumber" name="flatNumber" ngModel #flatNum="ngModel" [(ngModel)]="commericalAll.ActivityDto.ShaqaRaqam" placeholder="Flat Number">
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-4">
+                      <label for="floor">Floor :</label>
+                      <div class="input">
+                        <input type="text" class="form-control" id="floor" name="floor" ngModel #flr="ngModel" [(ngModel)]="commericalAll.ActivityDto.Tabeq" placeholder="Floor">
+                      </div>
+                    </div>
+                </div> 
+                <div class="form-row">
+                  <div class="form-group col-sm-6">
+                      <label for="endOfLease">End of Leasse :</label>
+                      <div class="input">
+                        <input type="date" class="form-control" id="endOfLease" name="endOfLease" ngModel #endOf="ngModel" [(ngModel)]="commericalAll.ActivityDto.NehayetAqdEgar" placeholderde="End of Lease">
+                      </div>
+                  </div> 
+                  <div class="form-group col-sm-6">
+                      <label for="office">Office :</label>
+                      <div class="input">
+                        <input type="text" class="form-control" id="office" name="office" ngModel #off="ngModel" [(ngModel)]="commericalAll.ActivityDto.Maktab" placeholder="Office">
+                      </div>
+                  </div>
+              </div>
+              <div class="button">
+                  <br>
+                  <button type="submit" class="btn btn-info submit">Add</button>
+              </div>
+          </div>
+        </div>
+        </div>
+        </ng-template>
+    </ngb-tab>
+    <ngb-tab>
+        <ng-template ngbTabTitle>Mangement</ng-template>
+        <ng-template ngbTabContent>
+          <div class="container">
+            <div class="form">
+             <div class="FormContainer">
+                  <div class="form-row">
+                    <div class="form-group col-sm-3">
+                        <label for="name">Name :</label>
+                        <div class="input">
+                          <input type="text" class="form-control" id="name" name="name" ngModel #na="ngModel" [(ngModel)]="name" placeholder="Name">
+                        </div>
+                    </div> 
+                    <div class="form-group col-sm-3">
+                        <label for="gender">Gender :</label>
+                        <div class="input">
+                          <input type="text" class="form-control" id="gender" name="gender" ngModel #gend="ngModel" [(ngModel)]="gender" (change)="getGender(gend)" [ngbTypeahead]="searchGender" [resultFormatter]="formatter" [ngModelOptions]="{standalone: true}" placeholder="Gender">
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-3">
+                      <label for="achievementType">Personal Achievement Type :</label><i>*</i>
+                      <div class="input">
+                        <input type="text" class="form-control" id="achievementType" name="achievementType" ngModel #achType="ngModel" [(ngModel)]="achievementType" (change)="getAchievementType(achType)" [ngbTypeahead]="searchAchievementTypes" [resultFormatter]="formatter" [ngModelOptions]="{standalone: true}" placeholder="Personal Achievement Type" required>
+                      </div>
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label for="achievementKind">Personal Achievement kind :</label>
+                        <div class="input">
+                          <input type="text" class="form-control" id="achievementKind" name="achievementKind" ngModel #na="ngModel" [(ngModel)]="commericalAll.RecordManagementDto.TahqeekShakhsiaKind" placeholder="Achievement Kind">
+                        </div>
+                    </div> 
+                </div> 
+                <div class="form-row">
+                  <div class="form-group col-sm-4">
+                      <label for="mangerBirthDate">Manger BirthDate :</label>
+                      <div class="input">
+                        <input type="date" class="form-control" id="mangerBirthDate" name="mangerBirthDate" ngModel #MangerBirthD="ngModel" [(ngModel)]="commericalAll.RecordManagementDto.TareekhAlmilad" placeholder="Manger Birth Date">
+                      </div>
+                  </div> 
+                  <div class="form-group col-sm-4">
+                      <label for="mangerAdjective">Manger Adjective :</label>
+                      <div class="input">
+                        <input type="text" class="form-control" id="mangerAdjective" name="mangerAdjective" ngModel #mangerAdj="ngModel" [(ngModel)]="mangerAdjective" (change)="getMangerAdjective(mangerAdj)" [ngbTypeahead]="searchMangerAdjective" [resultFormatter]="formatter" [ngModelOptions]="{standalone: true}" placeholder="Manger Adjective">
+                      </div>
+                  </div>
+                  <div class="form-group col-sm-4">
+                    <label for="powers">Powers :</label>
+                    <div class="input">
+                      <input type="text" class="form-control" id="powers" name="powers" ngModel #pwrs="ngModel" [(ngModel)]="powers" placeholder="Powers">
+                    </div>
+                  </div>
+                </div>
+                <div class="form-row"> 
+                  <div class="form-group col-sm-3">
+                      <label for="mangerPhone">Manger Phone :</label>
+                      <div class="input">
+                        <input type="text" class="form-control" id="mangerPhone" name="mangerPhone" ngModel #mgPhone="ngModel" [(ngModel)]="commericalAll.RecordManagementDto.PhoneManager" placeholder="Manger Phone">
+                      </div>
+                  </div>
+                  <div class="form-group col-sm-3">
+                      <label for="mangerFax">Manger Fax :</label>
+                      <div class="input">
+                        <input type="text" class="form-control" id="mangerFax" name="mangerFax" ngModel #mgFax="ngModel" [(ngModel)]="mangerFax" placeholder="Manger Fax">
+                      </div>
+                  </div>
+                  <div class="form-group col-sm-3">
+                      <label for="mangerEmail">Manger Email :</label>
+                      <div class="input">
+                        <input type="text" class="form-control" id="mangerEmail" name="mangerEmail" ngModel #mgEmail="ngModel" [(ngModel)]="mangerEmail" placeholder="Manger Email">
+                      </div>
+                  </div>
+                  <div class="form-group col-sm-3">
+                    <label for="website">Website :</label>
+                    <div class="input">
+                      <input type="text" class="form-control" id="website" name="website" ngModel #web="ngModel" [(ngModel)]="website" placeholder="Website">
+                    </div>
+                  </div>
+                </div>
+                <div class="button">
+                  <br>
+                  <button type="submit" class="btn btn-info submit">Add</button>
+                </div>
+             </div>
+            </div>
+          </div>
+        </ng-template>
+    </ngb-tab>
+    <ngb-tab>
+        <ng-template ngbTabTitle>Additional Data</ng-template>
+        <ng-template ngbTabContent>
+          <div class="container">
+            <div class="form">
+             <div class="FormContainer">
+                <div class="form-row">
+                    <div class="form-group col-sm-4">
+                        <label for="comName">Commerical Name :</label>
+                        <div class="input">
+                          <input type="text" class="form-control" id="comName" name="comName" ngModel #coName="ngModel" [(ngModel)]="commericalAll.AdditionalDataDto.CommercialName" placeholder="Commerical Name">
+                        </div>
+                    </div> 
+                    <div class="form-group col-sm-4">
+                        <label for="telephone1">Telephone 1 :</label>
+                        <div class="input">
+                          <input type="text" class="form-control" id="telephone1" name="telephone1" ngModel #telOne="ngModel" [(ngModel)]="commericalAll.AdditionalDataDto.CommercialName" placeholder="Telephone 1">
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-4">
+                      <label for="telephone2">Telephone 2:</label>
+                      <div class="input">
+                        <input type="text" class="form-control" id="telephone2" name="telephone2" ngModel #telTwo="ngModel" [(ngModel)]="commericalAll.AdditionalDataDto.Tel1" placeholder="Telephone 2">
+                      </div>
+                    </div>
+                </div> 
+                <div class="form-row">
+                  <div class="form-group col-sm-4">
+                      <label for="mobile">Mobile :</label>
+                      <div class="input">
+                        <input type="text" class="form-control" id="mobile" name="mobile" ngModel #mob="ngModel" [(ngModel)]="commericalAll.AdditionalDataDto.Tel2" placeholder="Mobile">
+                      </div>
+                  </div> 
+                  <div class="form-group col-sm-4">
+                      <label for="fax">Fax :</label>
+                      <div class="input">
+                        <input type="text" class="form-control" id="fax" name="fax" ngModel #fx="ngModel" [(ngModel)]="commericalAll.AdditionalDataDto.Fax" placeholder="Fax">
+                      </div>
+                  </div>
+                  <div class="form-group col-sm-4">
+                    <label for="email">Email :</label>
+                    <div class="input">
+                      <input type="text" class="form-control" id="email" name="email" ngModel #em="ngModel" [(ngModel)]="commericalAll.AdditionalDataDto.EMail" placeholder="Email">
+                    </div>
+                  </div>
+                </div>
+                <div class="form-row"> 
+                  <div class="form-group col-sm-6">
+                      <label for="corAddress">Corresponding Address :</label>
+                      <div class="input">
+                        <input type="text" class="form-control" id="corAddress" name="corAddress" ngModel #corAdd="ngModel" [(ngModel)]="commericalAll.AdditionalDataDto.CorrespondenceAddress" placeholder="Corresponding Address">
+                      </div>
+                  </div>
+                  <div class="form-group col-sm-6">
+                      <label for="jobHistory">Job History :</label>
+                      <div class="input">
+                        <input type="text" class="form-control" id="jobHistory" name="jobHistory" ngModel #jobHis="ngModel" [(ngModel)]="commericalAll.AdditionalDataDto.MerchantJobsHistory" placeholder="Job History">
+                      </div>
+                  </div>
+                </div>
+                <div class="form-row"> 
+                  <div class="form-group col-sm-6 form-row">
+                      <label for="traderPhoto" class="Label">Trader Photo :</label>
+                      <div class="input col-sm-3">
+                        <button class="btn btn-secondary traderPhotoButton" type="button" (click)="tradPhotoPicker.click()">Pick Image</button>
+                        <input type="file" accept="image/*" class="form-control" id="image" name="traderPhoto" ngModel #tradPhotoPicker #tradPhoto="ngModel" [(ngModel)]="traderPhoto" (change)="onTraderPhotoPicked($event)" placeholder="Trader Photo">
+                      </div>
+                      <div class="col-sm-9" *ngIf="traderPhotoPreview !== '' && traderPhotoPreview">
+                        <img class="image-preview" [src]="traderPhotoPreview">
+                      </div>
+                  </div>
+                  <div class="form-group col-sm-6 form-row">
+                      <label for="commericalSign" class="Label">Commerical Sign :</label>
+                      <div class="input col-sm-3">
+                        <button class="btn btn-secondary traderPhotoButton" type="button" (click)="comSignPicker.click()">Pick Image</button>
+                        <input type="file" accept="image/*" class="form-control" id="image" name="commericalSign" ngModel #comSignPicker #comSign="ngModel" [(ngModel)]="commericalSign" (change)="onCommericalSignPicked($event)" placeholder="Commerical Sign">
+                      </div>
+                      <div class="col-sm-9" *ngIf="commericalSignPreview !== '' && commericalSignPreview">
+                        <img class="image-preview" [src]="commericalSignPreview">
+                      </div>
+                  </div>
+                </div>
+                <div class="button">
+                  <br>
+                  <button type="submit" class="btn btn-info submit">Add</button>
+                </div>
+             </div>
+            </div>
+          </div>
+        </ng-template>
+    </ngb-tab>
+  </ngb-tabset>
+  <div class="button">
+    <button type="submit" class="btn btn-info addRecord"  [disabled]="!addForm.valid">Add Record</button>
+  </div>
+</form>
+</div>
+
+<ng-template  #partenerData let-modal class="modal-lg">
+  <div class="modal-header">
+    <h3 class="modal-title" id="modal-basic-title">Partner Data </h3>
+    <button type="button" class="close" aria-label="Close" (click)="ModalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form (ngSubmit)="onSubmitPartnerData(addPartnerDataForm)" #addPartnerDataForm="ngForm">
+  <div class="modal-body" style="height: 170px;">
+      <div class="form-row">
+        <div class="form-group col-sm-6">
+            <label for="jop">Jop :</label>
+            <div class="input">
+              <input type="text" class="form-control" id="jop" name="jop" ngModel #partJop="ngModel" [(ngModel)]="commericalAll.PartnerDto[0].Job" placeholder="Jop" required>
+            </div>
+        </div> 
+        <div class="form-group col-sm-6">
+            <label for="id">National ID :</label>
+            <div class="input">
+              <input type="text" class="form-control" id="id" name="id" ngModel #partId="ngModel" [(ngModel)]="commericalAll.PartnerDto[0].Id" placeholder="National ID" required>
+            </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-sm-6">
+            <label for="nationality">Nationality :</label>
+            <div class="input">
+              <input type="text" class="form-control" id="nationality" name="nationality" ngModel #nation="ngModel" (change)="getNationality(nation)" [(ngModel)]="nationality" [ngbTypeahead]="searchNationalities" [resultFormatter]="formatter" [ngModelOptions]="{standalone: true}" placeholder="Nationality" required>
+            </div>
+        </div> 
+        <div class="form-group col-sm-6">
+            <label for="birthDate">BirthDate :</label>
+            <div class="input">
+              <input type="date" class="form-control" id="birthDate" name="birthDate" ngModel #birthD="ngModel" [(ngModel)]="commericalAll.PartnerDto[0].BirthDate" placeholder="Birth Date" required>
+            </div>
+        </div>
+      </div>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-info"  [disabled]="!addPartnerDataForm.valid">Submit</button>
+    <button type="button" class="btn btn-outline-secondary" (click)="ModalRef.hide()">Close</button>
+  </div>
+</form>
+</ng-template>

@@ -1,0 +1,101 @@
+.container {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+}
+
+.container .form {
+  -ms-flex-preferred-size: 30%;
+      flex-basis: 30%;
+}
+
+.container table {
+  width: 650px;
+  margin: auto;
+  -ms-flex-preferred-size: 70%;
+      flex-basis: 70%;
+}
+
+.loader {
+  margin-top: 200px;
+}
+
+.loader .inside {
+  width: 50px;
+  margin: auto;
+}
+
+.FormContainer {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 1px solid #6fcce4;
+  width: 90%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+}
+
+.FormContainer form {
+  width: 100%;
+  margin: 20px;
+}
+
+.FormContainer form input {
+  width: 100%;
+}
+
+.FormContainer form .custom-select {
+  width: 100%;
+}
+
+.FormContainer form .error {
+  color: red;
+}
+
+.FormContainer form .input {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.FormContainer form .input input {
+  -ms-flex-preferred-size: 100%;
+      flex-basis: 100%;
+}
+
+.FormContainer form .input i {
+  -ms-flex-preferred-size: 5%;
+      flex-basis: 5%;
+}
+
+.FormContainer form .correct {
+  color: lime;
+  padding-top: 10px;
+  margin-left: 5px;
+}
+
+.FormContainer form .wrong {
+  color: red;
+  padding-top: 10px;
+  margin-left: 5px;
+}
+
+.FormContainer form input.ng-invalid.ng-touched {
+  border: 1px solid red;
+}
+
+.FormContainer .imgcontainer {
+  width: 30%;
+}
+
+.FormContainer .imgcontainer img {
+  margin-top: 20px;
+  width: 200px;
+  height: 200px;
+}
+/*# sourceMappingURL=list-sub-categories.component.css.map */
